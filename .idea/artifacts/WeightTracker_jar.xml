@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WeightTracker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WeightTracker_jar</output-path>
+    <root id="archive" name="WeightTracker.jar">
+      <element id="module-output" name="WeightTracker" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../JarFiles/sqlite-jdbc-3.23.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
