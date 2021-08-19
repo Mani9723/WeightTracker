@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Stack;
 
 @SuppressWarnings("SqlResolve")
 public class Database
@@ -168,44 +167,8 @@ public class Database
 		preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1,rowID);
 		preparedStatement.execute();
-
-//		adjustRowAfterDelete(getLastRowID());
 	}
 
-	@Deprecated
-	private void adjustRowAfterDelete(int number) throws SQLException
-	{
-		PreparedStatement preparedStatement;
-		String query = "ALTER TABLE weight_tracker AUTO_INCREMENT = ?";
-
-		preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1,(number+1));
-		preparedStatement.execute();
-	}
-
-	@Deprecated
-	public int getLastRowID() throws SQLException
-	{
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String query = "SELECT MAX('id') FROM weight_tracker";
-
-		try{
-			preparedStatement = connection.prepareStatement(query);
-			resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()){
-				return resultSet.getInt("id");
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			if(preparedStatement != null && resultSet != null) {
-				preparedStatement.close();
-				resultSet.close();
-			}
-		}
-		return 0;
-	}
 
 	public void closeDB()
 	{
