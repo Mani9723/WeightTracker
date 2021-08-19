@@ -1,10 +1,12 @@
 @SuppressWarnings("unused")
 public class TableData
 {
+	private int id;
 	private String date, weight, timeDay, exerciseName, exerciseReps;
 
-	public TableData(String date, String weight, String timeDay, String exerciseName, String exerciseReps)
+	public TableData(int id,String date, String weight, String timeDay, String exerciseName, String exerciseReps)
 	{
+		this.id = id;
 		this.date = date;
 		this.weight = weight;
 		this.timeDay = timeDay;
@@ -32,6 +34,10 @@ public class TableData
 		this.weight = weight;
 	}
 
+	public int getId()
+	{
+		return id;
+	}
 	public String getTimeDay()
 	{
 		return timeDay;

@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
+@SuppressWarnings("SqlResolve")
 public class Database
 {
 	private static final String SQL_FILE = "weight_tracker.sqlite";
@@ -129,7 +131,7 @@ public class Database
 		}
 	}
 
-	public ArrayList<TableData> getStatement()
+	public ArrayList<TableData> getTable()
 	{
 		ArrayList<TableData> observableList = new ArrayList<>();
 		String query = "SELECT * from weight_tracker";
@@ -144,7 +146,8 @@ public class Database
 			while (true) {
 				assert resultSet != null;
 				if (!resultSet.next()) break;
-				observableList.add(new TableData(resultSet.getString("date"),
+				observableList.add(new TableData(resultSet.getInt("id"),
+						resultSet.getString("date"),
 						resultSet.getString("weight") + " lbs ",
 						resultSet.getString("periodOfDay"),
 						resultSet.getString("exerciseName"),
@@ -165,6 +168,43 @@ public class Database
 		preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1,rowID);
 		preparedStatement.execute();
+
+//		adjustRowAfterDelete(getLastRowID());
+	}
+
+	@Deprecated
+	private void adjustRowAfterDelete(int number) throws SQLException
+	{
+		PreparedStatement preparedStatement;
+		String query = "ALTER TABLE weight_tracker AUTO_INCREMENT = ?";
+
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1,(number+1));
+		preparedStatement.execute();
+	}
+
+	@Deprecated
+	public int getLastRowID() throws SQLException
+	{
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "SELECT MAX('id') FROM weight_tracker";
+
+		try{
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getInt("id");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			if(preparedStatement != null && resultSet != null) {
+				preparedStatement.close();
+				resultSet.close();
+			}
+		}
+		return 0;
 	}
 
 	public void closeDB()

@@ -7,10 +7,14 @@ public class UI
 {
 	static Scanner keyboard = new Scanner(System.in);
 	static Database database = new Database();
+	static IdManager idManager = new IdManager();
+
+	private static boolean justUpdate = false;
 
 	@SuppressWarnings("InfiniteLoopStatement")
 	public static void main(String[] args)
 	{
+		updateIdList(database.getTable());
 		while (true) {
 			showMainMenu();
 			handleInputLogic(getUserChoice());
@@ -39,6 +43,7 @@ public class UI
 				showTable();
 				break;
 			case 3:
+				justUpdate = false;
 				deleteRow();
 				break;
 			case 4:
@@ -74,7 +79,7 @@ public class UI
 
 		return choice;
 	}
-	static boolean weightEntry()
+	private static boolean weightEntry()
 	{
 		Exercise exercise;
 		Weight weight;
@@ -100,6 +105,9 @@ public class UI
 		}
 
 		weight = new Weight(currWeight, TrackerDate.getPeriodOfDay());
+		justUpdate = true;
+		idManager.clearMap();
+		updateIdList(database.getTable());
 		return database.addEntry(weight,exercise);
 	}
 
@@ -114,28 +122,39 @@ public class UI
 		System.out.print("Enter Row Number: ");
 		rowId = Integer.parseInt(keyboard.nextLine());
 		try {
-			database.deleteRow(rowId);
+			database.deleteRow(idManager.getIndex(rowId));
 			System.out.println("\tRow " + rowId + " deleted.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		idManager.clearMap();
+		updateIdList(database.getTable());
 
 	}
 
 	static void showTable()
 	{
-		ArrayList<TableData> dataArrayList = database.getStatement();
+		ArrayList<TableData> dataArrayList = database.getTable();
 		int id = 1;
 		System.out.format("%30s\n","TABLE");
 		System.out.format("%3s%8s%12s%10s%15s%12s\n","Id","Date"
 				,"Weight","Time","Exercise","Reps");
 		drawLine();
 		for(TableData data : dataArrayList){
-			System.out.format("%2d %10s%12s%10s%15s%10s",id,data.getDate(),
+			System.out.format("%2d %10s%12s%10s%15s%10s",id++,data.getDate(),
 					data.getWeight(), data.getTimeDay(),data.getExerciseName(),
 					data.getExerciseReps());
-			id++;
+
 			System.out.println();
+		}
+	}
+
+	private static void updateIdList(ArrayList<TableData> dataArrayList)
+	{
+		int index = 1;
+		for(TableData data : dataArrayList){
+			idManager.addId(index, data.getId());
+			index++;
 		}
 	}
 
