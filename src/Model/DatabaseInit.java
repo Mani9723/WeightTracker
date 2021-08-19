@@ -1,3 +1,5 @@
+package Model;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -8,7 +10,7 @@ public class DatabaseInit
 {
 	/**
 	 * Creates static connection to the database
-	 * @param file Database file name
+	 * @param file Model.Database file name
 	 * @return
 	 */
 	static Connection connector(String file)

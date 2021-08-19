@@ -1,3 +1,5 @@
+package Objects;
+
 import java.text.SimpleDateFormat;
 /**
  * Date class used in the project
@@ -33,7 +35,7 @@ public class TrackerDate
 	}
 
 	/**
-	 * Calculates the period of the based on the TimeOfDay enums
+	 * Calculates the period of the based on the Objects.TimeOfDay enums
 	 * @return
 	 */
 	public static TimeOfDay getPeriodOfDay()

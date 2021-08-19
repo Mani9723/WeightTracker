@@ -1,3 +1,10 @@
+import Model.Database;
+import Model.IdManager;
+import Objects.Exercise;
+import Objects.TableData;
+import Objects.TrackerDate;
+import Objects.Weight;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -113,17 +120,17 @@ public class UI
 		Weight weight;
 		double currWeight;
 
-		System.out.println("\tWeight Entry Mode");
+		System.out.println("\tObjects.Weight Entry Mode");
 		System.out.println("1) Current Date: " + TrackerDate.getDate());
-		System.out.print("2) Current Weight: ");
+		System.out.print("2) Current Objects.Weight: ");
 		currWeight = Double.parseDouble(keyboard.nextLine());
 
 		System.out.println("3) Current Period of Day: " + TrackerDate.getPeriodOfDay().name());
 
-		System.out.print("4) Add Exercise (y/n)? ");
+		System.out.print("4) Add Objects.Exercise (y/n)? ");
 		String ans = keyboard.nextLine();
 		if(ans.equalsIgnoreCase("y")){
-			System.out.print("\t4.1) Exercise Name: ");
+			System.out.print("\t4.1) Objects.Exercise Name: ");
 			String eName = keyboard.nextLine();
 			System.out.print("\t4.2) Reps/miles/Minutes: ");
 			int reps = Integer.parseInt(keyboard.nextLine());
@@ -176,7 +183,7 @@ public class UI
 		int id = 1;
 		System.out.format("%30s\n","TABLE");
 		System.out.format("%3s%8s%12s%10s%15s%12s\n","Id","Date"
-				,"Weight","Time","Exercise","Reps");
+				,"Objects.Weight","Time","Objects.Exercise","Reps");
 		drawLine();
 		for(TableData data : dataArrayList){
 			System.out.format("%2d %10s%12s%10s%15s%10s",id++,data.getDate(),
@@ -189,7 +196,7 @@ public class UI
 
 	/**
 	 * Updates the id conversion map
-	 * @param dataArrayList TableData List
+	 * @param dataArrayList Objects.TableData List
 	 */
 	private static void updateIdList(ArrayList<TableData> dataArrayList)
 	{

@@ -1,5 +1,7 @@
+package Objects;
+
 /**
- * Represents the Exercise Object
+ * Represents the Objects.Exercise Object
  */
 @SuppressWarnings("FieldMayBeFinal")
 public class Exercise
@@ -9,7 +11,7 @@ public class Exercise
 
 	/**
 	 * Default constructor
-	 * @param name Name of Exercise
+	 * @param name Name of Objects.Exercise
 	 * @param reps Reps
 	 */
 	public Exercise(String name, int reps)

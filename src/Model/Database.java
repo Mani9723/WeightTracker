@@ -1,3 +1,10 @@
+package Model;
+
+import Objects.Exercise;
+import Objects.TableData;
+import Objects.TrackerDate;
+import Objects.Weight;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -18,7 +25,7 @@ public class Database
 	{
 		 connection =  DatabaseInit.connector(SQL_FILE);
 		if(connection == null){
-			System.out.println("Database not connected");
+			System.out.println("Model.Database not connected");
 			System.exit(1);
 		}
 		try {
@@ -41,11 +48,11 @@ public class Database
 		ResultSet resultSet = databaseMetaData.getTables(null, null,
 				TABLE_NAME, null);
 		if(!resultSet.next()){
-			System.out.println("Empty Database Detected...\nCreating a new one...");
+			System.out.println("Empty Model.Database Detected...\nCreating a new one...");
 			createMainTable();
-			System.out.println("Database weight_tracker.sqlite created...");
+			System.out.println("Model.Database weight_tracker.sqlite created...");
 		}else{
-			System.out.println("****Database Connected****");
+			System.out.println("****Model.Database Connected****");
 		}
 		resultSet.close();
 	}
@@ -107,8 +114,8 @@ public class Database
 
 	/**
 	 * Adds a user entry to the database
-	 * @param weight Weight
-	 * @param exercise Exercise
+	 * @param weight Objects.Weight
+	 * @param exercise Objects.Exercise
 	 * @return True on success
 	 */
 	public boolean addEntry(Weight weight, Exercise exercise)
@@ -122,8 +129,8 @@ public class Database
 
 	/**
 	 * Adds the user entry to the database
-	 * @param weight Weight
-	 * @param exercise Exercise
+	 * @param weight Objects.Weight
+	 * @param exercise Objects.Exercise
 	 * @return True on success
 	 */
 	@SuppressWarnings({"SqlResolve", "finally", "ReturnInsideFinallyBlock"})
@@ -135,7 +142,7 @@ public class Database
 
 		try{
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1,TrackerDate.getDate());
+			preparedStatement.setString(1, TrackerDate.getDate());
 			preparedStatement.setString(2,Double.toString(weight.getWeight()));
 			preparedStatement.setString(3,weight.getTimeOfDay().name());
 			preparedStatement.setString(4,exercise.getExerciseName());

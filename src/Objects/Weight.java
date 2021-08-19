@@ -1,5 +1,7 @@
+package Objects;
+
 /**
- * Defines Weight Object
+ * Defines Objects.Weight Object
  */
 @SuppressWarnings("FieldMayBeFinal")
 public class Weight
@@ -8,7 +10,7 @@ public class Weight
 	private TimeOfDay timeOfDay;
 
 	/**
-	 * Initializes the Weight object
+	 * Initializes the Objects.Weight object
 	 * @param weight Users weight
 	 * @param timeOfDay Period of Dat
 	 */
@@ -20,7 +22,7 @@ public class Weight
 
 	/**
 	 * Retrieves the weight
-	 * @return Weight
+	 * @return Objects.Weight
 	 */
 	public double getWeight()
 	{
@@ -29,7 +31,7 @@ public class Weight
 
 	/**
 	 * Retrieves the time of the day
-	 * @return TimeOfDay Enum
+	 * @return Objects.TimeOfDay Enum
 	 */
 	public TimeOfDay getTimeOfDay()
 	{

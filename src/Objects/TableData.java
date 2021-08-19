@@ -1,3 +1,5 @@
+package Objects;
+
 /**
  * Represents a row in the database
  */
@@ -11,10 +13,10 @@ public class TableData
 	 * Initializes the row
 	 * @param id Id
 	 * @param date Date
-	 * @param weight Weight
-	 * @param timeDay TimeOfDay
- 	 * @param exerciseName Exercise Name
-	 * @param exerciseReps Exercise Reps
+	 * @param weight Objects.Weight
+	 * @param timeDay Objects.TimeOfDay
+ 	 * @param exerciseName Objects.Exercise Name
+	 * @param exerciseReps Objects.Exercise Reps
 	 */
 	public TableData(int id,String date, String weight, String timeDay, String exerciseName, String exerciseReps)
 	{

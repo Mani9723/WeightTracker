@@ -1,3 +1,5 @@
+package Objects;
+
 /**
  * Enum defining the period of the day
  */
