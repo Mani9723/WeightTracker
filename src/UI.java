@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -32,6 +33,13 @@ public class UI
 				showTable();
 				break;
 			case 3:
+				deleteRow();
+				break;
+			case 4:
+				clearTable();
+				break;
+			case 5:
+				database.closeDB();
 				System.exit(0);
 		}
 	}
@@ -41,13 +49,15 @@ public class UI
 		System.out.println("\t\tMain Menu");
 		System.out.println("1) Add Entry");
 		System.out.println("2) Show Data Table");
-		System.out.println("3) Exit");
+		System.out.println("3) Delete A Row");
+		System.out.println("4) Clear Table");
+		System.out.println("5) Exit");
 	}
 
 	private static int getUserChoice()
 	{
 		int choice = -1;
-		while(choice < 1 || choice > 3) {
+		while(choice < 1 || choice > 5) {
 			try {
 				System.out.print("> ");
 				choice = Integer.parseInt(keyboard.nextLine());
@@ -87,6 +97,25 @@ public class UI
 		return database.addEntry(weight,exercise);
 	}
 
+	private static void clearTable()
+	{
+		database.clearTableData();
+	}
+
+	private static void deleteRow()
+	{
+		int rowId;
+		System.out.print("Enter Row Number: ");
+		rowId = Integer.parseInt(keyboard.nextLine());
+		try {
+			database.deleteRow(rowId);
+			System.out.println("\tRow " + rowId + " deleted.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	static void showTable()
 	{
 		ArrayList<TableData> dataArrayList = database.getStatement();
@@ -102,6 +131,5 @@ public class UI
 
 			System.out.println();
 		}
-
 	}
 }

@@ -5,10 +5,11 @@ public class Database
 {
 	private static final String SQL_FILE = "weight_tracker.sqlite";
 	private static final String TABLE_NAME = "weight_tracker";
-	private static final Connection connection =  DatabaseInit.connector(SQL_FILE);
+	private static Connection connection;
 
 	public Database()
 	{
+		 connection =  DatabaseInit.connector(SQL_FILE);
 		if(connection == null){
 			System.out.println("Database not connected");
 			System.exit(1);
@@ -73,7 +74,6 @@ public class Database
 		PreparedStatement preparedStatement = null;
 
 		try{
-			assert connection != null;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.execute();
 		} catch (SQLException e) {
@@ -82,6 +82,17 @@ public class Database
 			assert preparedStatement != null;
 			preparedStatement.close();
 		}
+	}
+
+	public void clearTableData()
+	{
+		String query = " DELETE FROM weight_tracker";
+		try {
+			createPrepStmtExecute(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public boolean addEntry(Weight weight, Exercise exercise)
@@ -101,7 +112,6 @@ public class Database
 				"VALUES(?,?,?,?,?)";
 
 		try{
-			assert connection != null;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1,TrackerDate.getDate());
 			preparedStatement.setString(2,Double.toString(weight.getWeight()));
@@ -124,11 +134,13 @@ public class Database
 		ArrayList<TableData> observableList = new ArrayList<>();
 		String query = "SELECT * from weight_tracker";
 
-		try (connection) {
+		try (Connection connection =  DatabaseInit.connector("weight_tracker.sqlite")) {
 			PreparedStatement preparedStatement = null;
 			ResultSet resultSet = null;
-			if (connection != null) preparedStatement = connection.prepareStatement(query);
-			if (preparedStatement != null) resultSet = preparedStatement.executeQuery();
+			if (connection != null)
+				preparedStatement = connection.prepareStatement(query);
+			if (preparedStatement != null)
+				resultSet = preparedStatement.executeQuery();
 			while (true) {
 				assert resultSet != null;
 				if (!resultSet.next()) break;
@@ -143,6 +155,25 @@ public class Database
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void deleteRow(int rowID) throws SQLException
+	{
+		PreparedStatement preparedStatement;
+		String query = "DELETE FROM weight_tracker where id = ?";
+
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1,rowID);
+		preparedStatement.execute();
+	}
+
+	public void closeDB()
+	{
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
