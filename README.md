@@ -1,5 +1,5 @@
 # WeightTracker
-Simple Weight Tracker
+## Simple Weight Tracker
 
 ### You can keep track of your weight.
 ### You can also add any exercise you do on a particular day.
