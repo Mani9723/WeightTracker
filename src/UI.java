@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * User Interface
+ */
 public class UI
 {
 	static Scanner keyboard = new Scanner(System.in);
@@ -23,6 +26,10 @@ public class UI
 		}
 	}
 
+	/**
+	 * Branches the user path based on the input
+	 * @param choice Option user chooses
+	 */
 	private static void handleInputLogic(int choice)
 	{
 		switch(choice){
@@ -52,6 +59,9 @@ public class UI
 		}
 	}
 
+	/**
+	 * Sleep for a second
+	 */
 	private static void sleep()
 	{
 		try {
@@ -61,6 +71,9 @@ public class UI
 		}
 	}
 
+	/**
+	 * Displays the main menu
+	 */
 	private static void showMainMenu()
 	{
 		System.out.println("\tMain Menu");
@@ -71,6 +84,10 @@ public class UI
 		System.out.println("5: Exit");
 	}
 
+	/**
+	 * Gets initial user choice for the main menu
+	 * @return
+	 */
 	private static int getUserChoice()
 	{
 		int choice = -1;
@@ -85,6 +102,11 @@ public class UI
 
 		return choice;
 	}
+
+	/**
+	 * Add an entry menu
+	 * @return True on successful entry
+	 */
 	private static boolean weightEntry()
 	{
 		Exercise exercise;
@@ -117,11 +139,17 @@ public class UI
 		return database.addEntry(weight,exercise);
 	}
 
+	/**
+	 * Clears the database table
+	 */
 	private static void clearTable()
 	{
 		database.clearTableData();
 	}
 
+	/**
+	 * Deletes a user defined row
+	 */
 	private static void deleteRow()
 	{
 		int rowId;
@@ -139,6 +167,9 @@ public class UI
 
 	}
 
+	/**
+	 * Displays the current table for the user
+	 */
 	static void showTable()
 	{
 		ArrayList<TableData> dataArrayList = database.getTable();
@@ -156,6 +187,10 @@ public class UI
 		}
 	}
 
+	/**
+	 * Updates the id conversion map
+	 * @param dataArrayList TableData List
+	 */
 	private static void updateIdList(ArrayList<TableData> dataArrayList)
 	{
 		int index = 1;
@@ -165,6 +200,9 @@ public class UI
 		}
 	}
 
+	/**
+	 * Duh
+	 */
 	private static void drawLine()
 	{
 		System.out.println("-----------------------------------------------" +

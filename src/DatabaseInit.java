@@ -1,8 +1,16 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * Initialzes the database
+ */
 public class DatabaseInit
 {
+	/**
+	 * Creates static connection to the database
+	 * @param file Database file name
+	 * @return
+	 */
 	static Connection connector(String file)
 	{
 		try{

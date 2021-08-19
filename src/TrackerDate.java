@@ -1,9 +1,7 @@
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-
+/**
+ * Date class used in the project
+ */
 @SuppressWarnings("unused")
 public class TrackerDate
 {
@@ -12,9 +10,10 @@ public class TrackerDate
 		return calcDate();
 	}
 
-	public final static String START_TIME = "00:00:00.000";
-	public final static String END_TIME = "23:59:59.999";
-
+	/**
+	 * Returns a standard date
+	 * @return Date String
+	 */
 	private static String calcDate()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -22,36 +21,10 @@ public class TrackerDate
 		return dateFormat.format(date);
 	}
 
-	public static String getFirstDayOfMonth(int month,int year)
-	{
-		YearMonth yearMonth = YearMonth.of( year, month );
-		LocalDate firstOfMonth = yearMonth.atDay(1);
-		return firstOfMonth.toString();
-	}
-
-	public static String getMonth(int month, int year)
-	{
-		YearMonth yearMonth = YearMonth.of( year, month);
-		return yearMonth.getMonth().toString();
-	}
-
-	public static String getLastDayOfMonth(int month, int year)
-	{
-		YearMonth yearMonth = YearMonth.of( year, month );
-		LocalDate last = yearMonth.atEndOfMonth();
-		return last.toString();
-	}
-
-	public static int getHour()
-	{
-		return calcHour();
-	}
-
-	public static Timestamp getSQLTime()
-	{
-		return java.sql.Timestamp.from(Instant.now());
-	}
-
+	/**
+	 * Finds the current hour of the day
+	 * @return Hour
+	 */
 	private static int calcHour()
 	{
 		SimpleDateFormat hourformat = new SimpleDateFormat("HH");
@@ -59,13 +32,10 @@ public class TrackerDate
 		return Integer.parseInt(hourformat.format(date));
 	}
 
-	public static String getTime()
-	{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		return dtf.format(now);
-	}
-
+	/**
+	 * Calculates the period of the based on the TimeOfDay enums
+	 * @return
+	 */
 	public static TimeOfDay getPeriodOfDay()
 	{
 		int hour = calcHour();

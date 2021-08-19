@@ -1,6 +1,9 @@
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Handles all of the transactions with the SQLite atabase
+ */
 @SuppressWarnings("SqlResolve")
 public class Database
 {
@@ -8,6 +11,9 @@ public class Database
 	private static final String TABLE_NAME = "weight_tracker";
 	private static Connection connection;
 
+	/**
+	 * Default Constructor. Establishes a connection with the database.
+	 */
 	public Database()
 	{
 		 connection =  DatabaseInit.connector(SQL_FILE);
@@ -85,6 +91,9 @@ public class Database
 		}
 	}
 
+	/**
+	 * Clears the table
+	 */
 	public void clearTableData()
 	{
 		String query = " DELETE FROM weight_tracker";
@@ -96,6 +105,12 @@ public class Database
 
 	}
 
+	/**
+	 * Adds a user entry to the database
+	 * @param weight Weight
+	 * @param exercise Exercise
+	 * @return True on success
+	 */
 	public boolean addEntry(Weight weight, Exercise exercise)
 	{
 		try {
@@ -105,6 +120,12 @@ public class Database
 		}
 	}
 
+	/**
+	 * Adds the user entry to the database
+	 * @param weight Weight
+	 * @param exercise Exercise
+	 * @return True on success
+	 */
 	@SuppressWarnings({"SqlResolve", "finally", "ReturnInsideFinallyBlock"})
 	public boolean addWeightEntry(Weight weight, Exercise exercise) throws SQLException
 	{
@@ -130,6 +151,10 @@ public class Database
 		}
 	}
 
+	/**
+	 * Retrieves the table from the database
+	 * @return Arraylist of table rows
+	 */
 	public ArrayList<TableData> getTable()
 	{
 		ArrayList<TableData> observableList = new ArrayList<>();
@@ -159,6 +184,11 @@ public class Database
 		return null;
 	}
 
+	/**
+	 * Deletes a row from the table
+	 * @param rowID Row ID to delete
+	 * @throws SQLException
+	 */
 	public void deleteRow(int rowID) throws SQLException
 	{
 		PreparedStatement preparedStatement;
@@ -169,7 +199,9 @@ public class Database
 		preparedStatement.execute();
 	}
 
-
+	/**
+	 * Closes the connection to the database
+	 */
 	public void closeDB()
 	{
 		try {
