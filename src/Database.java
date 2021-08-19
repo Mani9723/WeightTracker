@@ -38,7 +38,7 @@ public class Database
 			createMainTable();
 			System.out.println("Database weight_tracker.sqlite created...");
 		}else{
-			System.out.println("Database Connected");
+			System.out.println("****Database Connected****");
 		}
 		resultSet.close();
 	}

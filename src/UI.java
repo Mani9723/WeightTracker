@@ -15,6 +15,7 @@ public class UI
 			showMainMenu();
 			handleInputLogic(getUserChoice());
 			System.out.println();
+			drawLine();
 		}
 	}
 
@@ -24,9 +25,14 @@ public class UI
 			case 1:
 				boolean result = weightEntry();
 				if(result){
-					System.out.println("Entry Added");
+					System.out.println("\n****Entry Added****");
 				}else{
-					System.out.println("Entry Not Added");
+					System.out.println("\tEntry Not Added");
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 				break;
 			case 2:
@@ -46,12 +52,12 @@ public class UI
 
 	private static void showMainMenu()
 	{
-		System.out.println("\t\tMain Menu");
-		System.out.println("1) Add Entry");
-		System.out.println("2) Show Data Table");
-		System.out.println("3) Delete A Row");
-		System.out.println("4) Clear Table");
-		System.out.println("5) Exit");
+		System.out.println("\tMain Menu");
+		System.out.print("1: Add Entry");
+		System.out.print("\t2: Show Data Table\n");
+		System.out.print("3: Delete Row");
+		System.out.print("\t4: Clear Table\n");
+		System.out.println("5: Exit");
 	}
 
 	private static int getUserChoice()
@@ -74,7 +80,7 @@ public class UI
 		Weight weight;
 		double currWeight;
 
-		System.out.println("\t\tWeight Entry Mode");
+		System.out.println("\tWeight Entry Mode");
 		System.out.println("1) Current Date: " + TrackerDate.getDate());
 		System.out.print("2) Current Weight: ");
 		currWeight = Double.parseDouble(keyboard.nextLine());
@@ -86,7 +92,7 @@ public class UI
 		if(ans.equalsIgnoreCase("y")){
 			System.out.print("\t4.1) Exercise Name: ");
 			String eName = keyboard.nextLine();
-			System.out.print("\t4.2) Reps/miles: ");
+			System.out.print("\t4.2) Reps/miles/Minutes: ");
 			int reps = Integer.parseInt(keyboard.nextLine());
 			exercise = new Exercise(eName,reps);
 		}else{
@@ -119,17 +125,23 @@ public class UI
 	static void showTable()
 	{
 		ArrayList<TableData> dataArrayList = database.getStatement();
-		System.out.println("\t\t\t\t\t\t\t\tTable");
-		System.out.format("%8s%12s%10s%15s%12s\n","Date"
+		int id = 1;
+		System.out.format("%30s\n","TABLE");
+		System.out.format("%3s%8s%12s%10s%15s%12s\n","Id","Date"
 				,"Weight","Time","Exercise","Reps");
-		System.out.println("-----------------------------------------------" +
-				"----------------");
+		drawLine();
 		for(TableData data : dataArrayList){
-			System.out.format("%10s%12s%10s%15s%10s", data.getDate(),
+			System.out.format("%2d %10s%12s%10s%15s%10s",id,data.getDate(),
 					data.getWeight(), data.getTimeDay(),data.getExerciseName(),
 					data.getExerciseReps());
-
+			id++;
 			System.out.println();
 		}
+	}
+
+	private static void drawLine()
+	{
+		System.out.println("-----------------------------------------------" +
+				"----------------");
 	}
 }

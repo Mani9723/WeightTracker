@@ -4,6 +4,7 @@
     <root id="archive" name="WeightTracker.jar">
       <element id="module-output" name="WeightTracker" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../JarFiles/sqlite-jdbc-3.23.1.jar" path-in-jar="/" />
+      <element id="library" level="project" name="sqlite-jdbc-3.23.1" />
     </root>
   </artifact>
 </component>
