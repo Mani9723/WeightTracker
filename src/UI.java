@@ -33,11 +33,8 @@ public class UI
 				}else{
 					System.out.println("\tEntry Not Added");
 				}
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				sleep();
+
 				break;
 			case 2:
 				showTable();
@@ -52,6 +49,15 @@ public class UI
 			case 5:
 				database.closeDB();
 				System.exit(0);
+		}
+	}
+
+	private static void sleep()
+	{
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -123,7 +129,8 @@ public class UI
 		rowId = Integer.parseInt(keyboard.nextLine());
 		try {
 			database.deleteRow(idManager.getIndex(rowId));
-			System.out.println("\tRow " + rowId + " deleted.");
+			System.out.println("****Row " + rowId + " deleted****");
+			sleep();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

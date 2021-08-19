@@ -2,7 +2,7 @@ import java.util.LinkedHashMap;
 
 public class IdManager
 {
-	private LinkedHashMap<Integer, Integer> idMap;
+	private final LinkedHashMap<Integer, Integer> idMap;
 
 	public IdManager()
 	{
