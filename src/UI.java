@@ -210,8 +210,8 @@ public class UI
 		ArrayList<TableData> dataArrayList = database.getTable();
 		int id = 1;
 		System.out.format("%30s\n","TABLE");
-		System.out.format("%3s%8s%12s%10s%15s%12s\n","Id","Date"
-				,"Weight","Time","Exercise","Reps");
+		System.out.format("%3s%8s%12s%10s%15s%20s\n","Id","Date"
+				,"Weight","Time","Exercise","Reps/Miles/Mins");
 		drawLine();
 		for(TableData data : dataArrayList){
 			System.out.format("%2d %10s%12s%10s%15s%10s",id++,data.getDate(),
@@ -242,6 +242,6 @@ public class UI
 	private static void drawLine()
 	{
 		System.out.println("-----------------------------------------------" +
-				"----------------");
+				"---------------------");
 	}
 }
