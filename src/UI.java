@@ -81,7 +81,6 @@ public class UI
 				break;
 			case 4:
 				clearTable();
-				System.out.println("****Table Cleared****");
 				break;
 			case 5:
 				database.closeDB();
@@ -175,7 +174,13 @@ public class UI
 	 */
 	private static void clearTable()
 	{
-		database.clearTableData();
+		System.out.print("Confirm Clear Table? (y/n): ");
+		String ans = keyboard.nextLine();
+		if(ans.equalsIgnoreCase("y")){
+			database.clearTableData();
+			System.out.println("****Table Cleared****");
+			sleep(1000);
+		}
 	}
 
 	/**
