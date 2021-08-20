@@ -20,6 +20,7 @@ public class UI
 	static Database database = new Database();
 	static IdManager idManager = new IdManager();
 
+	private static int lastRowIndex = 0;
 	private static boolean justUpdate = false;
 
 	@SuppressWarnings("InfiniteLoopStatement")
@@ -68,7 +69,7 @@ public class UI
 				}else{
 					System.out.println("\tEntry Not Added");
 				}
-				sleep();
+				sleep(1000);
 
 				break;
 			case 2:
@@ -91,10 +92,10 @@ public class UI
 	/**
 	 * Sleep for a second
 	 */
-	private static void sleep()
+	private static void sleep(int millis)
 	{
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(millis);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -185,16 +186,20 @@ public class UI
 		int rowId;
 		System.out.print("Enter Row Number: ");
 		rowId = Integer.parseInt(keyboard.nextLine());
-		try {
-			database.deleteRow(idManager.getIndex(rowId));
-			System.out.println("****Row " + rowId + " deleted****");
-			sleep();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(rowId > lastRowIndex){
+			System.out.println("****Invalid Row ID: " + rowId +"****");
+			sleep(500);
+		}else {
+			try {
+				database.deleteRow(idManager.getIndex(rowId));
+				System.out.println("****Row " + rowId + " deleted****");
+				sleep(1000);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			idManager.clearMap();
+			updateIdList(database.getTable());
 		}
-		idManager.clearMap();
-		updateIdList(database.getTable());
-
 	}
 
 	/**
@@ -226,6 +231,7 @@ public class UI
 		int index = 1;
 		for(TableData data : dataArrayList){
 			idManager.addId(index, data.getId());
+			lastRowIndex = Math.max(lastRowIndex,index);
 			index++;
 		}
 	}
