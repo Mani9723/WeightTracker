@@ -5,6 +5,7 @@ import Objects.TableData;
 import Objects.TrackerDate;
 import Objects.Weight;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -22,14 +23,34 @@ public class UI
 	private static boolean justUpdate = false;
 
 	@SuppressWarnings("InfiniteLoopStatement")
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException, InterruptedException
 	{
-		updateIdList(database.getTable());
-		while (true) {
-			showMainMenu();
-			handleInputLogic(getUserChoice());
-			System.out.println();
-			drawLine();
+		clearTerminal();
+		if(database.isDBConnected()) {
+			System.out.println("\t\t****Database Connected****");
+			Thread.sleep(1000);
+			clearTerminal();
+			updateIdList(database.getTable());
+			while (true) {
+				showMainMenu();
+				handleInputLogic(getUserChoice());
+				System.out.println();
+				drawLine();
+			}
+		}else{
+			System.out.println("Database is not connected");
+		}
+	}
+
+	/**
+	 * Clears the Terminal, only set for windows.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private static void clearTerminal() throws IOException, InterruptedException
+	{
+		if(System.getProperty("os.name").contains("Windows") ) {
+			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		}
 	}
 
@@ -59,6 +80,7 @@ public class UI
 				break;
 			case 4:
 				clearTable();
+				System.out.println("****Table Cleared****");
 				break;
 			case 5:
 				database.closeDB();
@@ -120,17 +142,17 @@ public class UI
 		Weight weight;
 		double currWeight;
 
-		System.out.println("\tObjects.Weight Entry Mode");
+		System.out.println("\tWeight Entry Mode");
 		System.out.println("1) Current Date: " + TrackerDate.getDate());
-		System.out.print("2) Current Objects.Weight: ");
+		System.out.print("2) Current Weight: ");
 		currWeight = Double.parseDouble(keyboard.nextLine());
 
 		System.out.println("3) Current Period of Day: " + TrackerDate.getPeriodOfDay().name());
 
-		System.out.print("4) Add Objects.Exercise (y/n)? ");
+		System.out.print("4) Add Exercise (y/n)? ");
 		String ans = keyboard.nextLine();
 		if(ans.equalsIgnoreCase("y")){
-			System.out.print("\t4.1) Objects.Exercise Name: ");
+			System.out.print("\t4.1) Exercise Name: ");
 			String eName = keyboard.nextLine();
 			System.out.print("\t4.2) Reps/miles/Minutes: ");
 			int reps = Integer.parseInt(keyboard.nextLine());
@@ -141,9 +163,10 @@ public class UI
 
 		weight = new Weight(currWeight, TrackerDate.getPeriodOfDay());
 		justUpdate = true;
+		boolean good = database.addEntry(weight,exercise);
 		idManager.clearMap();
 		updateIdList(database.getTable());
-		return database.addEntry(weight,exercise);
+		return good;
 	}
 
 	/**
@@ -183,7 +206,7 @@ public class UI
 		int id = 1;
 		System.out.format("%30s\n","TABLE");
 		System.out.format("%3s%8s%12s%10s%15s%12s\n","Id","Date"
-				,"Objects.Weight","Time","Objects.Exercise","Reps");
+				,"Weight","Time","Exercise","Reps");
 		drawLine();
 		for(TableData data : dataArrayList){
 			System.out.format("%2d %10s%12s%10s%15s%10s",id++,data.getDate(),

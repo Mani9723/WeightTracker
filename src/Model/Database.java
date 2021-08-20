@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @SuppressWarnings("SqlResolve")
 public class Database
 {
+	private static boolean isDBConnected = false;
 	private static final String SQL_FILE = "weight_tracker.sqlite";
 	private static final String TABLE_NAME = "weight_tracker";
 	private static Connection connection;
@@ -52,9 +53,14 @@ public class Database
 			createMainTable();
 			System.out.println("Model.Database weight_tracker.sqlite created...");
 		}else{
-			System.out.println("****Model.Database Connected****");
+			isDBConnected = true;
 		}
 		resultSet.close();
+	}
+
+	public boolean isDBConnected()
+	{
+		return isDBConnected;
 	}
 
 	/**
