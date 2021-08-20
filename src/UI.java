@@ -186,7 +186,7 @@ public class UI
 		int rowId;
 		System.out.print("Enter Row Number: ");
 		rowId = Integer.parseInt(keyboard.nextLine());
-		if(rowId > lastRowIndex){
+		if(rowId > lastRowIndex || rowId < 1){
 			System.out.println("****Invalid Row ID: " + rowId +"****");
 			sleep(500);
 		}else {
